@@ -1,0 +1,83 @@
+<script type="text/template" id="refereeList">
+    <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <table class="table striped">
+    <thead>
+    <tr>
+		 <th>Años de experiencia</th>
+		 <th>Nombre</th>
+		 <th>Primer nombre</th>
+		 <th>Apellido</th>
+		 <th>Fecha de nacimiento</th>
+		 <th>Habilitar</th>
+		 <th>Numero de documento</th>
+    <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% _.each(referees, function(referee) { %>
+    <tr>
+		<td><%= htmlEncode(referee.getDisplay('ageOfExpirience')) %></td>
+		<td><%= htmlEncode(referee.getDisplay('name')) %></td>
+		<td><%= htmlEncode(referee.getDisplay('firstName')) %></td>
+		<td><%= htmlEncode(referee.getDisplay('lastName')) %></td>
+		<td><%= htmlEncode(referee.getDisplay('birthDate')) %></td>
+		<td><%= htmlEncode(referee.getDisplay('enable')) %></td>
+		<td><%= htmlEncode(referee.getDisplay('docNumber')) %></td>
+    <td>
+    <% if(showEdit) {%>
+    <a onclick="Backbone.trigger('<%= componentId %>-referee-edit',{id:<%= referee.id %>}); return false" >Editar</a> |
+	<% } %> 
+	<% if(showDelete) {%>
+    <a onclick="Backbone.trigger('<%= componentId %>-referee-delete',{id:<%= referee.id %>}); return false" >Borrar</a> 
+	<% } %>    
+	</td>
+    </tr>
+    <% }); %>
+    </tbody>
+    </table>
+    </div>
+</script>
+
+<script type="text/template" id="referee">
+    <div class="form-group">
+    <form role="form" id="<%= componentId %>-refereeForm">
+    <% if(referee.id) {%>
+    <input type="hidden" name="id" value="<%= referee.id %>"/>
+    <% }%>
+		<div class="form-group" >
+		<label for="ageOfExpirience">Age Of Expirience</label>
+    	<input type="text" class="form-control" id="ageOfExpirience" name="ageOfExpirience" placeholder="Ingrese el valor" value="<%= referee.get('ageOfExpirience') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="name">Nombre</label>
+    	<input type="text" class="form-control" id="name" name="name" placeholder="Ingrese el valor" value="<%= referee.get('name') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="firstName">Primer nombre</label>
+    	<input type="text" class="form-control" id="firstName" name="firstName" placeholder="Ingrese el valor" value="<%= referee.get('firstName') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="lastName">Apellido</label>
+    	<input type="text" class="form-control" id="lastName" name="lastName" placeholder="Ingrese el valor" value="<%= referee.get('lastName') %>"/>	
+		</div>
+		<div class="form-group" >
+			<label for="birthDate">Fecha de nacimiento</label>
+    		<input type="text" data-converter="date" data-date-format="dd/mm/yyyy" class="form-control" id="birthDate"  name="birthDate" placeholder="Ingrese el valor" />
+    		<%= '<scr'+'ipt>' %>
+        	$('#birthDate').datepicker({autoclose:true});
+        	$('#birthDate').datepicker('setDate',App.Utils.Converter.date.toDate("<%= referee.get('birthDate') %>"));
+    		<%= '</scr'+'ipt>' %>
+		</div>
+		<div class="form-group" >
+	    <label>
+    	  <input id="enable" name="enable" value="true" type="checkbox" <%= referee.get('enable')?'checked':'' %>> Habilitar
+    	</label>
+		</div>
+		<div class="form-group" >
+		<label for="docNumber">Numero de documento</label>
+    	<input type="text" class="form-control" id="docNumber" name="docNumber" placeholder="Ingrese el valor" value="<%= referee.get('docNumber') %>"/>	
+		</div>
+    </form>
+    </div>
+</script> 

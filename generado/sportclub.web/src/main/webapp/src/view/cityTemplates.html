@@ -1,0 +1,60 @@
+<script type="text/template" id="cityList">
+    <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <table class="table striped">
+    <thead>
+    <tr>
+		 <th>Nombre</th>
+		 <th>Población</th>
+		 <th>Identificador de país</th>
+    <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% _.each(citys, function(city) { %>
+    <tr>
+		<td><%= htmlEncode(city.getDisplay('name')) %></td>
+		<td><%= htmlEncode(city.getDisplay('population')) %></td>
+		<td><%= htmlEncode(city.getDisplay('countryId')) %></td>
+    <td>
+    <% if(showEdit) {%>
+    <a onclick="Backbone.trigger('<%= componentId %>-city-edit',{id:<%= city.id %>}); return false" >Editar</a> |
+	<% } %> 
+	<% if(showDelete) {%>
+    <a onclick="Backbone.trigger('<%= componentId %>-city-delete',{id:<%= city.id %>}); return false" >Borrar</a> 
+	<% } %>    
+	</td>
+    </tr>
+    <% }); %>
+    </tbody>
+    </table>
+    </div>
+</script>
+
+<script type="text/template" id="city">
+    <div class="form-group">
+    <form role="form" id="<%= componentId %>-cityForm">
+    <% if(city.id) {%>
+    <input type="hidden" name="id" value="<%= city.id %>"/>
+    <% }%>
+		<div class="form-group" >
+		<label for="name">Nombre</label>
+    	<input type="text" class="form-control" id="name" name="name" placeholder="Ingrese el valor" value="<%= city.get('name') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="population">Población</label>
+    	<input type="text" class="form-control" id="population" name="population" placeholder="Ingrese el valor" value="<%= city.get('population') %>"/>	
+		</div>
+		<div class="form-group" >
+ 
+			<label for="countryidId">Identificador de país</label> 
+            <select class="form-control" id="countryId" name="countryId">
+			  <option value="">Ninguno</option>
+            <% country.each(function(countryid) { %> 
+              <option value="<%=countryid.get('id')%>" <% if(city.get('countryId')==countryid.get('id')) {%>selected<%}%> ><%=countryid.get('name')%></option>
+            <% }); %>                
+            </select>  
+		</div>
+    </form>
+    </div>
+</script> 

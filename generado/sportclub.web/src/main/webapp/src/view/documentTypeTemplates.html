@@ -1,0 +1,48 @@
+<script type="text/template" id="documentTypeList">
+    <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <table class="table striped">
+    <thead>
+    <tr>
+		 <th>Nombre</th>
+		 <th>Longitud</th>
+    <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% _.each(documentTypes, function(documentType) { %>
+    <tr>
+		<td><%= htmlEncode(documentType.getDisplay('name')) %></td>
+		<td><%= htmlEncode(documentType.getDisplay('length')) %></td>
+    <td>
+    <% if(showEdit) {%>
+    <a onclick="Backbone.trigger('<%= componentId %>-documentType-edit',{id:<%= documentType.id %>}); return false" >Ediart</a> |
+	<% } %> 
+	<% if(showDelete) {%>
+    <a onclick="Backbone.trigger('<%= componentId %>-documentType-delete',{id:<%= documentType.id %>}); return false" >Borrar</a> 
+	<% } %>    
+	</td>
+    </tr>
+    <% }); %>
+    </tbody>
+    </table>
+    </div>
+</script>
+
+<script type="text/template" id="documentType">
+    <div class="form-group">
+    <form role="form" id="<%= componentId %>-documentTypeForm">
+    <% if(documentType.id) {%>
+    <input type="hidden" name="id" value="<%= documentType.id %>"/>
+    <% }%>
+		<div class="form-group" >
+		<label for="name">Nombre</label>
+    	<input type="text" class="form-control" id="name" name="name" placeholder="Ingrese el valor" value="<%= documentType.get('name') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="length">Longitud</label>
+    	<input type="text" class="form-control" id="length" name="length" placeholder="Ingrese el valor" value="<%= documentType.get('length') %>"/>	
+		</div>
+    </form>
+    </div>
+</script> 
