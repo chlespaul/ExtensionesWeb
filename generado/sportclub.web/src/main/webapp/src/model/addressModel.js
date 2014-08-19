@@ -38,11 +38,17 @@ define(['model/_addressModel'], function() {
             if(!attrs.aveneu){
                 validationMessage += "The avenue can't be empty. ";
             }
-            if(atrrs.street.isNaN()){
+            if(attrs.street.isNaN()){
                 validationMessage = "The street must be a number. ";
             }
-            if(atrrs.aveneu.isNaN()){
+            if(attrs.aveneu.isNaN()){
                 validationMessage = "The avenue must be a number. ";
+            }
+            if(attrs.street<1000){
+                validationMessage = "The street must have at least 3 digits. ";
+            }
+            if(attrs.aveneu<1000){
+                validationMessage = "The avenue must have at least 3 digits. ";
             }
             return validationMessage;
         }

@@ -33,11 +33,44 @@ define(['model/_memberModel'], function() {
  	validate: function(attrs,options){
             var validationMessage = "";
             if(!attrs.name){
-                validationMessage = "The name can't be empty.";
+                validationMessage += "The name can't be empty. ";
             }
-            if(validationMessage.length>0){
-               return validationMessage;
+            if(!attrs.firstName){
+                validationMessage += "The first name can't be empty. ";
             }
+            if(!attrs.lastName){
+                validationMessage += "The last name can't be empty. ";
+            }
+            if(!attrs.docNumber){
+                validationMessage += "The document number can't be empty. ";
+            }
+            if(!attrs.documenttypeId){
+                validationMessage += "The document type id can't be empty. ";
+            }
+            if(!attrs.partnerId){
+                validationMessage += "The partner id can't be empty. ";
+            }
+            if(attrs.docNumber.length<4){
+                validationMessage += "The document numer must have at least 5 characters. ";
+            }
+            if(attrs.documenttypeId==='ninguno'){
+                validationMessage += "The document type id must be specified. ";
+            }
+            var param = attrs.birthDate.split('/');
+            var dia = param[0];
+            var mes = param[1];
+            var ano = param[2];
+            var dat = new Date();
+            dat.setFullYear(ano,mes-1,dia);
+            var act = new Date();
+            if(dat>=act){
+                validationMessage += "The birth date must be valid. ";
+            }
+            act = act.getFullYear();
+            if(dat<act){
+                validationMessage += "The age must be less than 100 years. ";
+            }
+            return validationMessage;
         }
 
     });

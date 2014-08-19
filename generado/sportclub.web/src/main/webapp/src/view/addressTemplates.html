@@ -16,6 +16,7 @@
 		<td><%= htmlEncode(address.getDisplay('street')) %></td>
 		<td><%= htmlEncode(address.getDisplay('aveneu')) %></td>
 		<td><%= htmlEncode(address.getDisplay('cityId')) %></td>
+                <td><%= htmlEncode(address.getDisplay('countryId')) %></td>
     <td>
     <% if(showEdit) {%>
     <a onclick="Backbone.trigger('<%= componentId %>-address-edit',{id:<%= address.id %>}); return false" >Editar</a> |
